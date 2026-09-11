@@ -33,10 +33,20 @@ namespace BancoSENAIAPI.Controllers
             string novoNome = $"{codigoCliente}_{nameOriginal}_{Guid.NewGuid()}{extensao}";
             string caminhoFinal = Path.Combine(_caminhoRaiz, novoNome);
 
-            using(var stream = new FileStream(caminhoFinal, FileMode.Create))
+            using (var stream = new FileStream(caminhoFinal, FileMode.Create))
             {
                 await arquivo.CopyToAsync(stream);
             }
+            var documentoMetaDados = new Models.DocumentoMetaDado
+            {
+                Id = _nexId++,
+                Name = nameOriginal,
+                Caminho = caminhoFinal,
+                CodigoCliente = codigoCliente,
+            };
+            _documentosMetaDados.Add(documentoMetaDados);
+            return Ok(new { mensagem = "Documento anexado com sucesso", arquivoSalvo = novoNome});
+
         }
     }
 }
