@@ -6,6 +6,13 @@ namespace BancoSENAIAPI.Controllers
     [Route("api/v1/[controller]")]
     public class DocumentoController : Controller
     {
-      
+        private readonly string _caminhoRaiz = Path.Combine(
+            Directory.GetCurrentDirectory(), 
+            "ClienteArquivos"
+            );
+
+        private static List<Models.DocumentoMetaDado> _documentosMetaDados = new List<Models.DocumentoMetaDado>();
+
+        private static int _nexId = 1;
     }
 }
